@@ -1,1 +1,2 @@
 # deops-netology
+Stroka
