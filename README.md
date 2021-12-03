@@ -6,3 +6,4 @@ Stroka
 файлы с расширением .tfvars
 файлы переопределения
 конфигурационные файлы  .terrformrc terraform.rc
+git push -u origin fix
