@@ -1,4 +1,4 @@
-# deops-netology
+# devops-netology
 Stroka
 Будут проигнорированы все файлы в каталоге terraform
 файлы с разрешением tfstate
