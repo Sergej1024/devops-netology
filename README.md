@@ -8,25 +8,28 @@ Stroka
 конфигурационные файлы  .terrformrc terraform.rc
 
 #Домашнее задание к занятию «2.4. Инструменты Git»
-Вопрос1
+#Вопрос1
 $ git show aefea
 commit aefead2207ef7e2aa5dc81a34aedf0cad4c32545
 Author: Alisdair McDiarmid <alisdair@users.noreply.github.com>
 Date:   Thu Jun 18 10:29:58 2020 -0400
 
     Update CHANGELOG.md
-Вопрос2
+    
+#Вопрос2
 $ git show 85024
 commit 85024d3100126de36331c6982bfaac02cdab9e76 (tag: v0.12.23)
 Author: tf-release-bot <terraform@hashicorp.com>
 Date:   Thu Mar 5 20:56:10 2020 +0000
 
     v0.12.23
-Вопрос3
+    
+#Вопрос3
 $ git log --pretty=%P -n 1 b8d720
 56cd7859e05c36c06b56d013b55a252d0bb7e158
 9ea88f22fc6269854151c571162c5bcf958bee2b
-Вопрос4
+
+#Вопрос4
 $ git log  v0.12.23..v0.12.24  --oneline
 33ff1c03b (tag: v0.12.24) v0.12.24
 b14b74c49 [Website] vmc provider links
@@ -39,7 +42,7 @@ d5f9411f5 command: Fix bug when using terraform login on Windows
 dd01a3507 Update CHANGELOG.md
 225466bc3 Cleanup after v0.12.23 release
 
-Вопрос5
+#Вопрос5
 $ git log -S'func providerSource' --oneline
 5af1e6234 main: Honor explicit provider_installation CLI config when present
 8c928e835 main: Consult local directories as potential mirrors of providers
@@ -51,7 +54,7 @@ providers.Source, tfdiags.Diagnostics) {
 187:func providerSourceForCLIConfigLocation(loc cliconfig.ProviderInstallationLocation, servi
 ces *disco.Disco) (getproviders.Source, tfdiags.Diagnostics) {
 
-Вопрос6
+#Вопрос6
 $ git grep --break --heading -n -e'globalPluginDirs'
 commands.go
 88:             GlobalPluginDirs: globalPluginDirs(),
@@ -186,7 +189,7 @@ diff --git a/plugins.go b/plugins.go
 +       return ret
 +}
 
-Вопрос7
+#Вопрос7
 $ git log -S'func synchronizedWriters' --pretty=format:'%h - %an %ae'
 bdfea50cc - James Bardin j.bardin@gmail.com
 5ac311e2a - Martin Atkins mart@degeneration.co.uk
