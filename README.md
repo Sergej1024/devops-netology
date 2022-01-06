@@ -194,7 +194,7 @@ $ git log -S'func synchronizedWriters' --pretty=format:'%h - %an %ae'
 bdfea50cc - James Bardin j.bardin@gmail.com
 5ac311e2a - Martin Atkins mart@degeneration.co.uk
 
-Домашнее задание к занятию "3.1. Работа в терминале, лекция 1"
+## Домашнее задание к занятию "3.1. Работа в терминале, лекция 1"
 
 1.	Установите средство виртуализации Oracle VirtualBox. 
 Задание выполнялось на Windows путем нажатия кнопок Далие Готово
