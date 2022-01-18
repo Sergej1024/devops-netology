@@ -285,7 +285,7 @@ batch - запускается когда уровень загрузки сис
 
 Выполнено: vagrant suspend
 
-##Домашнее задание к занятию "3.2. Работа в терминале, лекция 2"
+# Домашнее задание к занятию "3.2. Работа в терминале, лекция 2"
 
 1. Какого типа команда cd? Попробуйте объяснить, почему она именно такого типа; опишите ход своих мыслей, если считаете что она могла бы быть другого типа.
 
@@ -463,3 +463,124 @@ Connection to localhost closed.
 14. sudo echo string > /root/new_file не даст выполнить перенаправление под обычным пользователем, так как перенаправлением занимается процесс shell'а, который запущен без sudo под вашим пользователем. Для решения данной проблемы можно использовать конструкцию echo string | sudo tee /root/new_file. Узнайте что делает команда tee и почему в отличие от sudo echo команда с sudo tee будет работать.
     
 команда tee делает вывод одновременно и в файл, указаный в качестве параметра, и в stdout, в данном примере команда получает вывод из stdin, перенаправленный через pipe от stdout команды echo и так как команда запущена от sudo , соотвественно имеет права на запись в файл
+
+    
+# Домашнее задание к занятию "3.3. Операционные системы, лекция 1"
+
+ 
+## 1.   Какой системный вызов делает команда cd? В прошлом ДЗ мы выяснили, что cd не является самостоятельной программой, это shell builtin, поэтому запустить strace непосредственно на cd не получится. Тем не менее, вы можете запустить strace на /bin/bash -c 'cd /tmp'. В этом случае вы увидите полный список системных вызовов, которые делает сам bash при старте. Вам нужно найти тот единственный, который относится именно к cd.
+    newfstatat(AT_FDCWD, "/tmp", {st_mode=S_IFDIR|S_ISVTX|0777, st_size=520, ...}, 0) = 0
+    chdir("/tmp") 
+
+## 2.   Попробуйте использовать команду file на объекты разных типов на файловой системе. Например:
+
+    vagrant@netology1:~$ file /dev/tty
+    /dev/tty: character special (5/0)
+    vagrant@netology1:~$ file /dev/sda
+    /dev/sda: block special (8/0)
+    vagrant@netology1:~$ file /bin/bash
+    /bin/bash: ELF 64-bit LSB shared object, x86-64
+
+    Используя strace выясните, где находится база данных file на основании которой она делает свои догадки.
+    
+    Файл базы типов - /usr/share/misc/magic.mgc
+    в тексте это:
+    
+    newfstatat(AT_FDCWD, "/home/sergej/.magic.mgc", 0x7ffc464fe630, 0) = -1 ENOENT (Нет такого файла или каталога)
+    newfstatat(AT_FDCWD, "/home/sergej/.magic", 0x7ffc464fe630, 0) = -1 ENOENT (Нет такого файла или каталога)
+    openat(AT_FDCWD, "/etc/magic.mgc", O_RDONLY) = -1 ENOENT (Нет такого файла или каталога)
+    newfstatat(AT_FDCWD, "/etc/magic", {st_mode=S_IFREG|0644, st_size=111, ...}, 0) = 0
+    openat(AT_FDCWD, "/etc/magic", O_RDONLY) = 3
+    newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=111, ...}, AT_EMPTY_PATH) = 0
+    read(3, "# Magic local data for file(1) c"..., 4096) = 111
+    read(3, "", 4096)                       = 0
+    close(3)                                = 0
+    openat(AT_FDCWD, "/usr/share/misc/magic.mgc", O_RDONLY) = 3
+    newfstatat(3, "", {st_mode=S_IFREG|0644, st_size=6652944, ...}, AT_EMPTY_PATH) = 0
+    mmap(NULL, 6652944, PROT_READ|PROT_WRITE, MAP_PRIVATE, 3, 0) = 0x7fd1eda3d000
+
+    
+## 3.   Предположим, приложение пишет лог в текстовый файл. Этот файл оказался удален (deleted в lsof), однако возможности сигналом сказать приложению переоткрыть файлы или просто перезапустить приложение – нет. Так как приложение продолжает писать в удаленный файл, место на диске постепенно заканчивается. Основываясь на знаниях о перенаправлении потоков предложите способ обнуления открытого удаленного файла (чтобы освободить место на файловой системе).
+    
+    
+## 4.   Занимают ли зомби-процессы какие-то ресурсы в ОС (CPU, RAM, IO)?
+    "Зомби" процессы, в отличии от "сирот" освобождают свои ресурсы, но не освобождают запись в таблице процессов. Запись освободиться при вызове wait() родительским процессом.
+    
+## 5.   В iovisor BCC есть утилита opensnoop:
+
+    root@vagrant:~# dpkg -L bpfcc-tools | grep sbin/opensnoop
+    /usr/sbin/opensnoop-bpfcc
+
+    На какие файлы вы увидели вызовы группы open за первую секунду работы утилиты? Воспользуйтесь пакетом bpfcc-tools для Ubuntu 20.04. Дополнительные сведения по установке.
+    [sergej@surg-adm tools]$ sudo dnf install bcc
+    [sergej@surg-adm ~]$ cd /usr/share/bcc/tools
+    [sergej@surg-adm tools]$ sudo ./opensnoop
+    [sudo] пароль для sergej: 
+    PID    COMM               FD ERR PATH
+    889    systemd-oomd        6   0 /proc/meminfo
+    2392   Viber              86   0 /usr/share/zoneinfo/Asia/Yekaterinburg
+    2392   Viber              86   0 /usr/share/zoneinfo/Asia/Yekaterinburg
+    2392   Viber              86   0 /usr/share/zoneinfo/Asia/Yekaterinburg
+    2392   Viber              86   0 /usr/share/zoneinfo/Asia/Yekaterinburg
+    889    systemd-oomd        6   0 /proc/meminfo
+    934    in:imjournal       29   0 /var/log/journal/8c20bed4bb5c404a94103f87f30bccc5/system.journal
+    1221   abrt-dump-journ     6   0 /var/log/journal/8c20bed4bb5c404a94103f87f30bccc5/system.journal
+    1220   abrt-dump-journ     6   0 /var/log/journal/8c20bed4bb5c404a94103f87f30bccc5/system.journal
+    1236   abrt-dump-journ     6   0 /var/log/journal/8c20bed4bb5c404a94103f87f30bccc5/system.journal
+    7091   gnome-terminal-    14   0 /tmp
+
+    
+## 6.   Какой системный вызов использует uname -a? Приведите цитату из man по этому системному вызову, где описывается альтернативное местоположение в /proc, где можно узнать версию ядра и релиз ОС.
+    
+    системный вызов uname()
+
+    Цитата :
+
+         Part of the utsname information is also accessible  via  /proc/sys/kernel/{ostype, hostname, osrelease, version, domainname}.
+
+    cat /etc/redhat-release выводит версию и релиз
+    
+## 7.   Чем отличается последовательность команд через ; и через && в bash? Например:
+
+    root@netology1:~# test -d /tmp/some_dir; echo Hi
+    Hi
+    root@netology1:~# test -d /tmp/some_dir && echo Hi
+    root@netology1:~#
+
+    Есть ли смысл использовать в bash &&, если применить set -e?
+    
+    && -  условный оператор, 
+    ;  - разделитель последовательных команд
+
+    test -d /tmp/some_dir && echo Hi - в данном случае echo  отработает только при успешном заверщении команды test
+
+    set -e - прерывает сессию при любом ненулевом значении исполняемых команд в конвеере кроме последней. В случае &&  вместе с set -e- вероятно не имеет смысла, так как при ошибке, выполнение команд прекратиться.
+    
+## 8.   Из каких опций состоит режим bash set -euxo pipefail и почему его хорошо было бы использовать в сценариях?
+    -e прерывает выполнение исполнения при ошибке любой команды кроме последней в последовательности 
+    -x вывод трейса простых команд 
+    -u неустановленные/не заданные параметры и переменные считаются как ошибки, с выводом в stderr текста ошибки и выполнит завершение неинтерактивного вызова
+    -o pipefail возвращает код возврата набора/последовательности команд, ненулевой при последней команды или 0 для успешного выполнения команд.
+
+    Повышает деталезацию вывода ошибок(логирования), и завершит сценарий при наличии ошибок, на любом этапе выполнения сценария, кроме последней завершающей команды.
+    
+## 9.   Используя -o stat для ps, определите, какой наиболее часто встречающийся статус у процессов в системе. В man ps ознакомьтесь (/PROCESS STATE CODES) что значат дополнительные к основной заглавной буквы статуса процессов. Его можно не учитывать при расчете (считать S, Ss или Ssl равнозначными).
+    Самый часто встречающийся статус это - S
+
+   PROCESS STATE CODES
+       Here are the different values that the s, stat and state output specifiers (header "STAT" or "S") will display to describe the state of a process:
+       D    uninterruptible sleep (usually IO)
+       R    running or runnable (on run queue)
+       S    interruptible sleep (waiting for an event to complete)
+       T    stopped, either by a job control signal or because it is being traced.
+       W    paging (not valid since the 2.6.xx kernel)
+       X    dead (should never be seen)
+       Z    defunct ("zombie") process, terminated but not reaped by its parent.
+
+       For BSD formats and when the stat keyword is used, additional characters may be displayed:
+       <    high-priority (not nice to other users)
+       N    low-priority (nice to other users)
+       L    has pages locked into memory (for real-time and custom IO)
+       s    is a session leader
+       l    is multi-threaded (using CLONE_THREAD, like NPTL pthreads do)
+       +    is in the foreground process group.
