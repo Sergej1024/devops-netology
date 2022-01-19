@@ -502,6 +502,28 @@ Connection to localhost closed.
     
 ## 3.   Предположим, приложение пишет лог в текстовый файл. Этот файл оказался удален (deleted в lsof), однако возможности сигналом сказать приложению переоткрыть файлы или просто перезапустить приложение – нет. Так как приложение продолжает писать в удаленный файл, место на диске постепенно заканчивается. Основываясь на знаниях о перенаправлении потоков предложите способ обнуления открытого удаленного файла (чтобы освободить место на файловой системе).
     
+    [sergej@surg-adm ~]$ lsof | grep /tmp/test1
+    ping      301543                           sergej    1w      REG               0,35     18447       1656 /tmp/test1
+    [sergej@surg-adm ~]$ lsof | grep /tmp/test1
+    ping      301543                           sergej    1w      REG               0,35     24423       1656 /tmp/test1 (deleted)
+    [sergej@surg-adm ~]$ cat /proc/301543/fd/1 > /tmp/test1
+    [sergej@surg-adm ~]$ cat /tmp/test1
+    PING ya.ru (87.250.250.242) 56(84) bytes of data.
+    64 bytes from ya.ru (87.250.250.242): icmp_seq=1 ttl=249 time=49.3 ms
+    64 bytes from ya.ru (87.250.250.242): icmp_seq=2 ttl=249 time=49.1 ms
+    64 bytes from ya.ru (87.250.250.242): icmp_seq=3 ttl=249 time=49.0 ms
+    64 bytes from ya.ru (87.250.250.242): icmp_seq=4 ttl=249 time=48.9 ms
+    64 bytes from ya.ru (87.250.250.242): icmp_seq=5 ttl=249 time=49.0 ms
+    64 bytes from ya.ru (87.250.250.242): icmp_seq=6 ttl=249 time=48.9 ms
+    64 bytes from ya.ru (87.250.250.242): icmp_seq=7 ttl=249 time=48.9 ms
+    64 bytes from ya.ru (87.250.250.242): icmp_seq=8 ttl=249 time=49.2 ms
+    64 bytes from ya.ru (87.250.250.242): icmp_seq=9 ttl=249 time=49.1 ms
+    ...
+    [sergej@surg-adm ~]$ ls -l /tmp
+    итого 100
+    -rw-r--r-- 1 sergej sergej    94 янв 18 12:34 847bf70473fa93942054bb1d51dd24d6-{87A94AB0-E370-4cde-98D3-ACC110C5967D
+    -rw-rw-r-- 1 sergej sergej 35511 янв 19 10:47 test1
+
     
 ## 4.   Занимают ли зомби-процессы какие-то ресурсы в ОС (CPU, RAM, IO)?
     "Зомби" процессы, в отличии от "сирот" освобождают свои ресурсы, но не освобождают запись в таблице процессов. Запись освободиться при вызове wait() родительским процессом.
