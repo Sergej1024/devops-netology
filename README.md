@@ -693,6 +693,21 @@ uid=993(node_exporter) gid=990(node_exporter) groups=990(node_exporter)
 Created symlink /etc/systemd/system/multi-user.target.wants/node_exporter.service → /etc/systemd/system/node_exporter.service.
 [root@centos8 tmp]# systemctl start node_exporter.service
 [root@centos8 tmp]# firewall-cmd --zone=public --add-port=9100/tcp --permanent
+[root@centos8 tmp]# cat /etc/systemd/system/node_exporter.service
+[Unit]
+Description=Prometheus Node Exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=node_exporter
+Group=node_exporter
+Type=simple
+ExecStart=/opt/node_exporter
+EnvironmentFile=/etc/default/node_exporter
+
+[Install]
+WantedBy=multi-user.target
 ```
 ### 2.Ознакомьтесь с опциями node_exporter и выводом /metrics по-умолчанию. Приведите несколько опций, которые вы бы выбрали для базового мониторинга хоста по CPU, памяти, диску и сети.
 
