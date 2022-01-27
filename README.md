@@ -597,7 +597,7 @@ chdir("/tmp")
     root@vagrant:~# dpkg -L bpfcc-tools | grep sbin/opensnoop
     /usr/sbin/opensnoop-bpfcc
 ```
-    На какие файлы вы увидели вызовы группы open за первую секунду работы утилиты? Воспользуйтесь пакетом bpfcc-tools для Ubuntu 20.04. Дополнительные сведения по установке.
+На какие файлы вы увидели вызовы группы open за первую секунду работы утилиты? Воспользуйтесь пакетом bpfcc-tools для Ubuntu 20.04. Дополнительные сведения по установке.
 ```shell
     [sergej@surg-adm tools]$ sudo dnf install bcc
     [sergej@surg-adm ~]$ cd /usr/share/bcc/tools
@@ -619,13 +619,10 @@ chdir("/tmp")
     
 ### 6. Какой системный вызов использует uname -a? Приведите цитату из man по этому системному вызову, где описывается альтернативное местоположение в /proc, где можно узнать версию ядра и релиз ОС.
     
-    системный вызов uname()
-
+системный вызов uname()
     Цитата :
-
-         Part of the utsname information is also accessible  via  /proc/sys/kernel/{ostype, hostname, osrelease, version, domainname}.
-
-    cat /etc/redhat-release выводит версию и релиз
+    > Part of the utsname information is also accessible  via  /proc/sys/kernel/{ostype, hostname, osrelease, version, domainname}.
+    > cat /etc/redhat-release выводит версию и релиз
     
 ### 7. Чем отличается последовательность команд через ; и через && в bash? Например:
 ```shell
@@ -687,13 +684,13 @@ uid=993(node_exporter) gid=990(node_exporter) groups=990(node_exporter)
 [root@centos8 tmp]# tar xzf node_exporter-1.3.1.linux-amd64.tar.gz
 [root@centos8 tmp]# cp node_exporter-1.3.1.linux-amd64/node_exporter /opt
 [root@centos8 tmp]# chown node_exporter:node_exporter /opt/node_exporter
-[root@centos8 tmp]# mcedit /etc/systemd/system/node_exporter.service
+[root@centos8 tmp]# mcedit /etc/systemd/system/node_exporter@.service
 [root@centos8 tmp]# systemctl daemon-reload
 [root@centos8 tmp]# systemctl enable node_exporter.service
 Created symlink /etc/systemd/system/multi-user.target.wants/node_exporter.service → /etc/systemd/system/node_exporter.service.
 [root@centos8 tmp]# systemctl start node_exporter.service
 [root@centos8 tmp]# firewall-cmd --zone=public --add-port=9100/tcp --permanent
-[root@centos8 tmp]# cat /etc/systemd/system/node_exporter.service
+[root@centos8 tmp]# cat /etc/systemd/system/node_exporter@.service
 [Unit]
 Description=Prometheus Node Exporter
 Wants=network-online.target
@@ -703,12 +700,13 @@ After=network-online.target
 User=node_exporter
 Group=node_exporter
 Type=simple
-ExecStart=/opt/node_exporter
-EnvironmentFile=/etc/default/node_exporter
+ExecStart=/opt/node_exporter -C /etc/default/node_exporter/%i.conf
 
 [Install]
 WantedBy=multi-user.target
 ```
+> Запуск с доп. параметрами производится systemctl enable node_exporter@configsetting.service
+
 ### 2.Ознакомьтесь с опциями node_exporter и выводом /metrics по-умолчанию. Приведите несколько опций, которые вы бы выбрали для базового мониторинга хоста по CPU, памяти, диску и сети.
 
 CPU:
