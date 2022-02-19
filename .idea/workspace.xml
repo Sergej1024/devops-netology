@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="82a58645-a4e3-41c8-9be1-2d45bc551e62" name="Changes" comment="update 3.6" />
+    <list default="true" id="82a58645-a4e3-41c8-9be1-2d45bc551e62" name="Changes" comment="update 3.7 question 5">
+      <change afterPath="$PROJECT_DIR$/net/0001.pcap" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/net/03-08-net.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/net/03-09-net.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/net/Bitwarden_1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/net/Bitwarden_2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/net/Bitwarden_3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/net/Wareshark.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/net/google_auth.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/net/net_home.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/net/ssl-tls.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -35,7 +47,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="TF_FMT" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/mtr -zn 8.8.8.8.png" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/net/Wareshark.png" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -116,7 +128,14 @@
       <option name="project" value="LOCAL" />
       <updated>1644657045231</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="update 3.7 question 5">
+      <created>1644907779366</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1644907779366</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -139,6 +158,7 @@
     <MESSAGE value="structura" />
     <MESSAGE value="update 3.7" />
     <MESSAGE value="update 3.6" />
-    <option name="LAST_COMMIT_MESSAGE" value="update 3.6" />
+    <MESSAGE value="update 3.7 question 5" />
+    <option name="LAST_COMMIT_MESSAGE" value="update 3.7 question 5" />
   </component>
 </project>
