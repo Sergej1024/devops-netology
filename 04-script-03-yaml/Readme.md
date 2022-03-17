@@ -55,7 +55,7 @@ print('*' * 37 + "start script" + '*' * 37)
 print(srv)
 print('*' * 86)
 
-while 1 == 1:  # отладочное число проверок
+while True: #1 == 1:  # отладочное число проверок
     for host in srv:
         is_error = False
         ip = s.gethostbyname(host)
