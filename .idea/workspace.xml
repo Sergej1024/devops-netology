@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="82a58645-a4e3-41c8-9be1-2d45bc551e62" name="Changes" comment="update 4.3">
-      <change afterPath="$PROJECT_DIR$/05-virt-02-iaac/readme.md" afterDir="false" />
+    <list default="true" id="82a58645-a4e3-41c8-9be1-2d45bc551e62" name="Changes" comment="update 5.1">
+      <change afterPath="$PROJECT_DIR$/05-virt-02-iaac/src/ansible/inventory" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/05-virt-02-iaac/src/ansible/provision.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/05-virt-02-iaac/src/vagrant/Vagrantfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/05-virt-02-iaac/src/vagrant/ansible.cfg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/05-virt-01-basics/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/05-virt-01-basics/readme.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/05-virt-02-iaac/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/05-virt-02-iaac/readme.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -209,7 +212,14 @@
       <option name="project" value="LOCAL" />
       <updated>1647487911210</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="update 5.1">
+      <created>1649740509251</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1649740509251</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -236,6 +246,7 @@
     <MESSAGE value="update 3.8 3.9" />
     <MESSAGE value="update 4.2" />
     <MESSAGE value="update 4.3" />
-    <option name="LAST_COMMIT_MESSAGE" value="update 4.3" />
+    <MESSAGE value="update 5.1" />
+    <option name="LAST_COMMIT_MESSAGE" value="update 5.1" />
   </component>
 </project>

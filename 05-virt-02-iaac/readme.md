@@ -20,6 +20,26 @@
 
 Приложить вывод команд установленных версий каждой из программ, оформленный в markdown.
 
+```shell
+[sergej@surg-adm ~]$ vagrant version
+Installed Version: 2.2.16
+
+Vagrant was unable to check for the latest version of Vagrant.
+Please check manually at https://www.vagrantup.com
+[sergej@surg-adm ~]$ vboxmanage --version
+6.1.32r149290
+[sergej@surg-adm ~]$ virtualbox --help | head -n 1 | awk '{print $NF}'
+v6.1.32
+[sergej@surg-adm ~]$ ansible --version
+ansible 2.9.27
+  config file = /etc/ansible/ansible.cfg
+  configured module search path = ['/home/sergej/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /usr/lib/python3.10/site-packages/ansible
+  executable location = /usr/bin/ansible
+  python version = 3.10.4 (main, Mar 25 2022, 00:00:00) [GCC 11.2.1 20220127 (Red Hat 11.2.1-9)]
+[sergej@surg-adm ~]$ 
+```
+
 ###Задача 4 (*)
 
 Воспроизвести практическую часть лекции самостоятельно.
