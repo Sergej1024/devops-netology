@@ -1,0 +1,221 @@
+Index: 05-virt-02-iaac/readme.md
+===================================================================
+diff --git a/05-virt-02-iaac/readme.md b/05-virt-02-iaac/readme.md
+deleted file mode 100644
+--- a/05-virt-02-iaac/readme.md	(revision 37e6261e95b75913d124ba811f2b3fa3494e7899)
++++ /dev/null	(revision 37e6261e95b75913d124ba811f2b3fa3494e7899)
+@@ -1,146 +0,0 @@
+-## Домашнее задание к занятию "5.2. Применение принципов IaaC в работе с виртуальными машинами"
+-
+-### Задача 1
+-
+-1. Опишите своими словами основные преимущества применения на практике IaaC паттернов.
+-
+-    Унификация настройки серверной части, стабильность среды разработки, позволяет ускорить процесс производства и вывода продукта.
+-
+-2. Какой из принципов IaaC является основополагающим?
+-    
+-   Индемпотентность - принцип при котором неважно количество повторов операции, результат всегда будет один.
+-
+-### Задача 2
+-
+-1. Чем Ansible выгодно отличается от других систем управление конфигурациями?
+-
+-   не требует установки клиентской части, работает на штатном SSH 
+-
+-2. Какой, на ваш взгляд, метод работы систем конфигурации более надёжный push или pull?
+-
+-   По моему push надежнее, по причине ты сам запускаешь процесс когда, считаешь это нужным.
+-
+-### Задача 3
+-
+-Установить на личный компьютер:
+-
+-- VirtualBox
+-- Vagrant
+-- Ansible
+-
+-Приложить вывод команд установленных версий каждой из программ, оформленный в markdown.
+-
+-```shell
+-[sergej@surg-adm ~]$ vagrant version
+-Installed Version: 2.2.16
+-
+-Vagrant was unable to check for the latest version of Vagrant.
+-Please check manually at https://www.vagrantup.com
+-[sergej@surg-adm ~]$ vboxmanage --version
+-6.1.32r149290
+-[sergej@surg-adm ~]$ virtualbox --help | head -n 1 | awk '{print $NF}'
+-v6.1.32
+-[sergej@surg-adm ~]$ ansible --version
+-ansible 2.9.27
+-  config file = /etc/ansible/ansible.cfg
+-  configured module search path = ['/home/sergej/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+-  ansible python module location = /usr/lib/python3.10/site-packages/ansible
+-  executable location = /usr/bin/ansible
+-  python version = 3.10.4 (main, Mar 25 2022, 00:00:00) [GCC 11.2.1 20220127 (Red Hat 11.2.1-9)]
+-[sergej@surg-adm ~]$ 
+-```
+-
+-### Задача 4 (*)
+-
+-Воспроизвести практическую часть лекции самостоятельно.
+-
+-- Создать виртуальную машину.
+-- Зайти внутрь ВМ, убедиться, что Docker установлен с помощью команды
+-
+-```shell
+-docker ps
+-```
+-
+-```shell
+-[sergej@surg-adm vagrant]$ vagrant up
+-Bringing machine 'server1.netology' up with 'virtualbox' provider...
+-==> server1.netology: Importing base box 'bento/ubuntu-20.04'...
+-==> server1.netology: Matching MAC address for NAT networking...
+-==> server1.netology: Setting the name of the VM: server1.netology
+-==> server1.netology: Clearing any previously set network interfaces...
+-==> server1.netology: Preparing network interfaces based on configuration...
+-    server1.netology: Adapter 1: nat
+-    server1.netology: Adapter 2: hostonly
+-==> server1.netology: Forwarding ports...
+-    server1.netology: 22 (guest) => 20011 (host) (adapter 1)
+-    server1.netology: 22 (guest) => 2222 (host) (adapter 1)
+-==> server1.netology: Running 'pre-boot' VM customizations...
+-==> server1.netology: Booting VM...
+-==> server1.netology: Waiting for machine to boot. This may take a few minutes...
+-    server1.netology: SSH address: 127.0.0.1:2222
+-    server1.netology: SSH username: vagrant
+-    server1.netology: SSH auth method: private key
+-    server1.netology: 
+-    server1.netology: Vagrant insecure key detected. Vagrant will automatically replace
+-    server1.netology: this with a newly generated keypair for better security.
+-    server1.netology: 
+-    server1.netology: Inserting generated public key within guest...
+-    server1.netology: Removing insecure key from the guest if it's present...
+-    server1.netology: Key inserted! Disconnecting and reconnecting using new SSH key...
+-==> server1.netology: Machine booted and ready!
+-==> server1.netology: Checking for guest additions in VM...
+-==> server1.netology: Setting hostname...
+-==> server1.netology: Configuring and enabling network interfaces...
+-==> server1.netology: Mounting shared folders...
+-    server1.netology: /vagrant => /home/sergej/devops-netology/05-virt-02-iaac/src/vagrant
+-==> server1.netology: Running provisioner: ansible...
+-    server1.netology: Running ansible-playbook...
+-
+-PLAY [nodes] *******************************************************************
+-
+-TASK [Gathering Facts] *********************************************************
+-ok: [server1.netology]
+-
+-TASK [Create directory for ssh-keys] *******************************************
+-ok: [server1.netology]
+-
+-TASK [Adding rsa-key in /root/.ssh/authorized_keys] ****************************
+-changed: [server1.netology]
+-
+-TASK [Checking DNS] ************************************************************
+-changed: [server1.netology]
+-
+-TASK [Installing tools] ********************************************************
+-ok: [server1.netology] => (item=['git', 'curl'])
+-
+-TASK [Installing docker] *******************************************************
+-changed: [server1.netology]
+-
+-TASK [Add the current user to docker group] ************************************
+-changed: [server1.netology]
+-
+-PLAY RECAP *********************************************************************
+-server1.netology           : ok=7    changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+-
+-[sergej@surg-adm vagrant]$ vagrant ssh
+-Welcome to Ubuntu 20.04.3 LTS (GNU/Linux 5.4.0-91-generic x86_64)
+-
+- * Documentation:  https://help.ubuntu.com
+- * Management:     https://landscape.canonical.com
+- * Support:        https://ubuntu.com/advantage
+-
+- System information disabled due to load higher than 1.0
+-
+-
+-This system is built by the Bento project by Chef Software
+-More information can be found at https://github.com/chef/bento
+-Last login: Tue Apr 12 07:55:28 2022 from 10.0.2.2
+-vagrant@server1:~$ docker ps -a
+-CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+-vagrant@server1:~$  exit
+-logout
+-Connection to 127.0.0.1 closed.
+-[sergej@surg-adm vagrant]$ vagrant halt
+-==> server1.netology: Attempting graceful shutdown of VM...
+-[sergej@surg-adm vagrant]$ 
+-```
+Index: .idea/vcs.xml
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+deleted file mode 100644
+--- a/.idea/vcs.xml	(revision 37e6261e95b75913d124ba811f2b3fa3494e7899)
++++ /dev/null	(revision 37e6261e95b75913d124ba811f2b3fa3494e7899)
+@@ -1,6 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="VcsDirectoryMappings">
+-    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+-  </component>
+-</project>
+\ No newline at end of file
+Index: .idea/markdown.xml
+===================================================================
+diff --git a/.idea/markdown.xml b/.idea/markdown.xml
+deleted file mode 100644
+--- a/.idea/markdown.xml	(revision 37e6261e95b75913d124ba811f2b3fa3494e7899)
++++ /dev/null	(revision 37e6261e95b75913d124ba811f2b3fa3494e7899)
+@@ -1,6 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="MarkdownSettings">
+-    <option name="hideErrorsInCodeBlocks" value="true" />
+-  </component>
+-</project>
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"82a58645-a4e3-41c8-9be1-2d45bc551e62\" name=\"Changes\" comment=\"update 5.2\" />\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"GithubPullRequestsUISettings\">\n    <option name=\"selectedUrlAndAccountId\">\n      <UrlAndAccount>\n        <option name=\"accountId\" value=\"88965229-de52-46cb-91f3-e2e583f16d2f\" />\n        <option name=\"url\" value=\"https://github.com/Sergej1024/deops-netology.git\" />\n      </UrlAndAccount>\n    </option>\n  </component>\n  <component name=\"MarkdownSettingsMigration\">\n    <option name=\"stateVersion\" value=\"1\" />\n  </component>\n  <component name=\"ProjectId\" id=\"21lT3mFV40ocnI0UBlgYgXvFQw5\" />\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\">\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\n  </component>\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\">\n    <property name=\"ASKED_ADD_EXTERNAL_FILES\" value=\"true\" />\n    <property name=\"ASKED_SHARE_PROJECT_CONFIGURATION_FILES\" value=\"true\" />\n    <property name=\"RunOnceActivity.OpenProjectViewOnStart\" value=\"true\" />\n    <property name=\"RunOnceActivity.ShowReadmeOnStart\" value=\"true\" />\n    <property name=\"TF_FMT\" value=\"false\" />\n    <property name=\"last_opened_file_path\" value=\"$PROJECT_DIR$\" />\n    <property name=\"settings.editor.selected.configurable\" value=\"advanced.settings\" />\n  </component>\n  <component name=\"RunManager\" selected=\"Python.1\">\n    <configuration name=\"1\" type=\"PythonConfigurationType\" factoryName=\"Python\" temporary=\"true\" nameIsGenerated=\"true\">\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\n      <option name=\"PARENT_ENVS\" value=\"true\" />\n      <envs>\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\n      </envs>\n      <option name=\"SDK_HOME\" value=\"/usr/bin/python3.9\" />\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$/04-script-03-yaml\" />\n      <option name=\"IS_MODULE_SDK\" value=\"false\" />\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\n      <module name=\"\" />\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/04-script-03-yaml/1.py\" />\n      <option name=\"PARAMETERS\" value=\"\" />\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\n      <option name=\"MODULE_MODE\" value=\"false\" />\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\n      <option name=\"INPUT_FILE\" value=\"\" />\n      <method v=\"2\" />\n    </configuration>\n    <configuration name=\"devops-netology\" type=\"PythonConfigurationType\" factoryName=\"Python\" nameIsGenerated=\"true\">\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\n      <option name=\"PARENT_ENVS\" value=\"true\" />\n      <envs>\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\n      </envs>\n      <option name=\"SDK_HOME\" value=\"/usr/bin/python3.9\" />\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$/..\" />\n      <option name=\"IS_MODULE_SDK\" value=\"false\" />\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\n      <module name=\"\" />\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$\" />\n      <option name=\"PARAMETERS\" value=\"\" />\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\n      <option name=\"MODULE_MODE\" value=\"false\" />\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\n      <option name=\"INPUT_FILE\" value=\"\" />\n      <method v=\"2\" />\n    </configuration>\n    <list>\n      <item itemvalue=\"Python.devops-netology\" />\n      <item itemvalue=\"Python.1\" />\n    </list>\n    <recent_temporary>\n      <list>\n        <item itemvalue=\"Python.1\" />\n      </list>\n    </recent_temporary>\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"82a58645-a4e3-41c8-9be1-2d45bc551e62\" name=\"Changes\" comment=\"\" />\n      <created>1638514477742</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1638514477742</updated>\n    </task>\n    <task id=\"LOCAL-00001\" summary=\"update 3.4\">\n      <created>1643001970480</created>\n      <option name=\"number\" value=\"00001\" />\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1643001970480</updated>\n    </task>\n    <task id=\"LOCAL-00002\" summary=\"update 3.4 question 1\">\n      <created>1643002438328</created>\n      <option name=\"number\" value=\"00002\" />\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1643002438328</updated>\n    </task>\n    <task id=\"LOCAL-00003\" summary=\"update 3.5\">\n      <created>1643178408596</created>\n      <option name=\"number\" value=\"00003\" />\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1643178408596</updated>\n    </task>\n    <task id=\"LOCAL-00004\" summary=\"update 3.4 question1\">\n      <created>1643282512974</created>\n      <option name=\"number\" value=\"00004\" />\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1643282512974</updated>\n    </task>\n    <task id=\"LOCAL-00005\" summary=\"update 3.6\">\n      <created>1644469277537</created>\n      <option name=\"number\" value=\"00005\" />\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1644469277537</updated>\n    </task>\n    <task id=\"LOCAL-00006\" summary=\"update 3.6\">\n      <created>1644470500352</created>\n      <option name=\"number\" value=\"00006\" />\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1644470500352</updated>\n    </task>\n    <task id=\"LOCAL-00007\" summary=\"update 3.6\">\n      <created>1644470587021</created>\n      <option name=\"number\" value=\"00007\" />\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1644470587021</updated>\n    </task>\n    <task id=\"LOCAL-00008\" summary=\"structura\">\n      <created>1644652144601</created>\n      <option name=\"number\" value=\"00008\" />\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1644652144601</updated>\n    </task>\n    <task id=\"LOCAL-00009\" summary=\"update 3.7\">\n      <created>1644656909799</created>\n      <option name=\"number\" value=\"00009\" />\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1644656909799</updated>\n    </task>\n    <task id=\"LOCAL-00010\" summary=\"update 3.6\">\n      <created>1644657045231</created>\n      <option name=\"number\" value=\"00010\" />\n      <option name=\"presentableId\" value=\"LOCAL-00010\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1644657045231</updated>\n    </task>\n    <task id=\"LOCAL-00011\" summary=\"update 3.7 question 5\">\n      <created>1644907779366</created>\n      <option name=\"number\" value=\"00011\" />\n      <option name=\"presentableId\" value=\"LOCAL-00011\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1644907779366</updated>\n    </task>\n    <task id=\"LOCAL-00012\" summary=\"update 3.8 3.9\">\n      <created>1645265382482</created>\n      <option name=\"number\" value=\"00012\" />\n      <option name=\"presentableId\" value=\"LOCAL-00012\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1645265382482</updated>\n    </task>\n    <task id=\"LOCAL-00013\" summary=\"update 4.2\">\n      <created>1646996658056</created>\n      <option name=\"number\" value=\"00013\" />\n      <option name=\"presentableId\" value=\"LOCAL-00013\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1646996658056</updated>\n    </task>\n    <task id=\"LOCAL-00014\" summary=\"update 4.3\">\n      <created>1647335229735</created>\n      <option name=\"number\" value=\"00014\" />\n      <option name=\"presentableId\" value=\"LOCAL-00014\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1647335229735</updated>\n    </task>\n    <task id=\"LOCAL-00015\" summary=\"update 4.3\">\n      <created>1647487911210</created>\n      <option name=\"number\" value=\"00015\" />\n      <option name=\"presentableId\" value=\"LOCAL-00015\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1647487911210</updated>\n    </task>\n    <task id=\"LOCAL-00016\" summary=\"update 5.1\">\n      <created>1649740509251</created>\n      <option name=\"number\" value=\"00016\" />\n      <option name=\"presentableId\" value=\"LOCAL-00016\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1649740509251</updated>\n    </task>\n    <task id=\"LOCAL-00017\" summary=\"update 5.2\">\n      <created>1649747187505</created>\n      <option name=\"number\" value=\"00017\" />\n      <option name=\"presentableId\" value=\"LOCAL-00017\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1649747187505</updated>\n    </task>\n    <task id=\"LOCAL-00018\" summary=\"update 5.2\">\n      <created>1649750302355</created>\n      <option name=\"number\" value=\"00018\" />\n      <option name=\"presentableId\" value=\"LOCAL-00018\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1649750302355</updated>\n    </task>\n    <task id=\"LOCAL-00019\" summary=\"update 5.2\">\n      <created>1649751895082</created>\n      <option name=\"number\" value=\"00019\" />\n      <option name=\"presentableId\" value=\"LOCAL-00019\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1649751895082</updated>\n    </task>\n    <task id=\"LOCAL-00020\" summary=\"update 5.2\">\n      <created>1649752615393</created>\n      <option name=\"number\" value=\"00020\" />\n      <option name=\"presentableId\" value=\"LOCAL-00020\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1649752615393</updated>\n    </task>\n    <option name=\"localTasksCounter\" value=\"21\" />\n    <servers />\n  </component>\n  <component name=\"Vcs.Log.Tabs.Properties\">\n    <option name=\"TAB_STATES\">\n      <map>\n        <entry key=\"MAIN\">\n          <value>\n            <State />\n          </value>\n        </entry>\n      </map>\n    </option>\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <option name=\"ADD_EXTERNAL_FILES_SILENTLY\" value=\"true\" />\n    <MESSAGE value=\"update 3.4\" />\n    <MESSAGE value=\"update 3.4 question 1\" />\n    <MESSAGE value=\"update 3.5\" />\n    <MESSAGE value=\"update 3.4 question1\" />\n    <MESSAGE value=\"structura\" />\n    <MESSAGE value=\"update 3.7\" />\n    <MESSAGE value=\"update 3.6\" />\n    <MESSAGE value=\"update 3.7 question 5\" />\n    <MESSAGE value=\"update 3.8 3.9\" />\n    <MESSAGE value=\"update 4.2\" />\n    <MESSAGE value=\"update 4.3\" />\n    <MESSAGE value=\"update 5.1\" />\n    <MESSAGE value=\"update 5.2\" />\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"update 5.2\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 37e6261e95b75913d124ba811f2b3fa3494e7899)
++++ b/.idea/workspace.xml	(date 1649756873427)
+@@ -240,7 +240,28 @@
+       <option name="project" value="LOCAL" />
+       <updated>1649752615393</updated>
+     </task>
+-    <option name="localTasksCounter" value="21" />
++    <task id="LOCAL-00021" summary="update 5.2">
++      <created>1649752710905</created>
++      <option name="number" value="00021" />
++      <option name="presentableId" value="LOCAL-00021" />
++      <option name="project" value="LOCAL" />
++      <updated>1649752710905</updated>
++    </task>
++    <task id="LOCAL-00022" summary="update 5.2">
++      <created>1649752955315</created>
++      <option name="number" value="00022" />
++      <option name="presentableId" value="LOCAL-00022" />
++      <option name="project" value="LOCAL" />
++      <updated>1649752955315</updated>
++    </task>
++    <task id="LOCAL-00023" summary="update 5.2">
++      <created>1649756094287</created>
++      <option name="number" value="00023" />
++      <option name="presentableId" value="LOCAL-00023" />
++      <option name="project" value="LOCAL" />
++      <updated>1649756094287</updated>
++    </task>
++    <option name="localTasksCounter" value="24" />
+     <servers />
+   </component>
+   <component name="Vcs.Log.Tabs.Properties">
