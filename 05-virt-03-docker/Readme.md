@@ -19,6 +19,9 @@ Hey, Netology
 </html>
 ```
 Опубликуйте созданный форк в своем репозитории и предоставьте ответ в виде ссылки на https://hub.docker.com/username_repo.
+
+https://hub.docker.com/r/sergej1024/nginx-docker/tags
+
 ### Задача 2
 
 Посмотрите на сценарий ниже и ответьте на вопрос: "Подходит ли в этом сценарии использование Docker контейнеров или лучше подойдет виртуальная машина, физическая машина? Может быть возможны разные варианты?"
@@ -47,7 +50,49 @@ Hey, Netology
 - Подключитесь во второй контейнер и отобразите листинг и содержание файлов в /data контейнера.
 
 ```shell
-
+[root@homesrv data]# docker run -it -v /data:/data -d --name Centos centos:latest
+Unable to find image 'centos:latest' locally
+latest: Pulling from library/centos
+a1d0c7532777: Pull complete
+Digest: sha256:a27fd8080b517143cbbbab9dfb7c8571c40d67d534bbdee55bd6c473f432b177
+Status: Downloaded newer image for centos:latest
+778cd090de0aa852573570820ef44f6a972e3a7eebe6fc6210893d158c250b56
+[root@homesrv data]# docker ps -a
+CONTAINER ID   IMAGE           COMMAND                  CREATED             STATUS             PORTS                                               NAMES
+778cd090de0a   centos:latest   "/bin/bash"              4 seconds ago       Up 4 seconds                                                           Centos
+a5d377e8f5cf   fb362a2ba4b9    "nginx -g 'daemon of…"   About an hour ago   Up About an hour   80/tcp, 0.0.0.0:5000->5000/tcp, :::5000->5000/tcp   nginx-homework5.3
+ff39920e931e   nginx           "/docker-entrypoint.…"   About an hour ago   Up About an hour   80/tcp                                              suspicious_kalam
+[root@homesrv data]# docker exec -it Centos bash
+[root@778cd090de0a /]# cd data
+[root@778cd090de0a data]# touch text
+[root@778cd090de0a data]# echo 1_Centos > text
+[root@778cd090de0a data]# cat text
+1_Centos
+[root@778cd090de0a data]# exit
+[root@homesrv /]# touch /data/text_host
+[root@homesrv /]# docker run -it -v /data:/data -d --name Debian debian:latest
+Unable to find image 'debian:latest' locally
+latest: Pulling from library/debian
+dbba69284b27: Pull complete
+Digest: sha256:87eefc7c15610cca61db5c0fd280911c6a737c0680d807432c0bd80cd0cca39b
+Status: Downloaded newer image for debian:latest
+fbfd259365958763b0e17a097000159e978403aecd10e7920d1b93d2fd86bd9a
+[root@homesrv /]# docker ps -a
+CONTAINER ID   IMAGE           COMMAND                  CREATED             STATUS             PORTS                                               NAMES
+fbfd25936595   debian:latest   "bash"                   10 seconds ago      Up 10 seconds                                                          Debian
+778cd090de0a   centos:latest   "/bin/bash"              16 minutes ago      Up 16 minutes                                                          Centos
+a5d377e8f5cf   fb362a2ba4b9    "nginx -g 'daemon of…"   About an hour ago   Up About an hour   80/tcp, 0.0.0.0:5000->5000/tcp, :::5000->5000/tcp   nginx-homework5.3
+ff39920e931e   nginx           "/docker-entrypoint.…"   2 hours ago         Up 2 hours         80/tcp                                              suspicious_kalam
+[root@homesrv /]# docker exec -it Debian bash
+root@fbfd25936595:/# cd data
+root@fbfd25936595:/data# ls -l
+total 4
+-rw-r--r-- 1 root root 9 Apr 16 18:02 text
+-rw-r--r-- 1 root root 0 Apr 16 18:37 text_host
+root@fbfd25936595:/data# cat text
+1_Centos
+root@fbfd25936595:/data# exit
+exit
 ```
 
 ### Задача 4 (*)
